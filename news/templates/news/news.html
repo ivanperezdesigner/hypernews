@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <title>Hyper News</title>
+</head>
+
+<body>
+    <form method="GET">
+        <input type="text" name="q" placeholder="Search news" />
+        <input type="submit" value="Search" />
+    </form>
+
+    <h2>Hyper news</h2>
+
+    {% regroup news_list by created|slice:":-9" as date_list %}
+    {% for created in date_list %}
+    <h4>{{ created.grouper }}</h4>
+    <ul>
+        {% for new in created.list %}
+        <li><a href="/news/{{ new.link }}/">{{ new.title }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+    <br>
+    <a target="_blank" href="/news/create/">Create</a>
+</body>
+
+</html>
